@@ -12,9 +12,13 @@
 
     <style>
         form {
-            margin: 0 auto;
+            /*margin: 0 auto;*/
             padding: 20px;
             background-color: #EEE;
+        }
+
+        input[type="reset"] {
+            display: inline-block;
         }
     </style>
 </head>
@@ -44,8 +48,8 @@
     <div class="form-group row">
         <label for="description" class="col-sm-2 col-form-label">Description: </label>
         <div class="col-sm-6">
-        <textarea name="description" class="form-control" id="description"
-                  cols="40" rows="10"
+        <textarea name="description" class="form-control"
+                  id="description" cols="40" rows="10"
                   placeholder="В соответствии с Законом Украины «О лекарственных средствах» обращение лекарственных средств на территории Украины возможно только после прохождения процедуры государственной регистрации."
                   maxlength="500"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
         </div>
@@ -71,24 +75,31 @@
         </div>
     </div>
     <div class="form-group row">
-        <div class="col-sm-4">
-            <input type="submit" class="form-control" name="submit" value="Create files!">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-3">
+            <input type="submit" class="btn btn-success btn-lg btn-primary" name="submit" id="submit"
+                   value="Create files!">
         </div>
-        <div class="col-sm-4">
-            <input type="reset" class="form-control" name="reset" id="reset" value="Clear">
+        <div class="col-sm-3">
+            <input type="reset" class="btn btn-danger btn-lg float-right" name="reset" id="reset" value="Clear">
         </div>
     </div>
 </form>
 
 <script>
 
+    document.getElementById("submit").onclick =
+        function () {
+            alert('Files created!');
+        };
+
     document.getElementById('reset').onclick =
         function () {
             document.getElementById('fileName').setAttribute('value', '');
             document.getElementById('title').setAttribute('value', '');
-            document.getElementById('description').setAttribute('value', '');
+            document.getElementById('description').innerText = '';
             document.getElementById('h1').setAttribute('value', '');
-            document.getElementById('text').setAttribute('value', '');
+            document.getElementById('text').innerText = '';
         };
 
 </script>
@@ -156,8 +167,6 @@ $filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'Windows-1251', 'utf-
 
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
 file_put_contents($filesNames['ua'], $filesTexts['ua']);
-
-echo 'File saved!';
 
 ?>
 
