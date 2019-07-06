@@ -9,29 +9,75 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <title>Articles Generator 1.0</title>
+
+    <style>
+        form {
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #EEE;
+        }
+    </style>
 </head>
 <body>
 
 <form method="post">
-    <label for="fileName">File name: </label><br><input type="text" id="fileName" name="fileName"
-                                                        placeholder="registratsiya-lekarstvennyh-sredstv-v-ukraine-registratsiya-lekarstv"
-                                                        size="75" maxlength="256"
-                                                        value="<?php echo isset($_POST['fileName']) ? $_POST['fileName'] : '' ?>"><br>
-    <label for="title">Title: </label><br><input type="text" id="title" name="title"
-                                                 placeholder="Регистрация лекарственных средств в Украине, регистрация лекарств"
-                                                 size="75" maxlength="100"
-                                                 value="<?php echo isset($_POST['title']) ? $_POST['title'] : '' ?>"><br>
-    <label for="description">Description: </label><br><textarea name="description" id="description" cols="40" rows="10"
-                                                                placeholder="В соответствии с Законом Украины «О лекарственных средствах»  обращение лекарственных средств на территории Украины возможно только после прохождения процедуры государственной регистрации."
-                                                                maxlength="500"><?php echo isset($_POST['description']) ? $_POST['description'] : '' ?></textarea><br>
-    <label for="h1">H1: </label><br><input type="text" id="h1" name="h1"
-                                           placeholder="Государственная регистрация лекарственных средств в Украине"
-                                           size="60" maxlength="100"
-                                           value="<?php echo isset($_POST['h1']) ? $_POST['h1'] : '' ?>"><br>
-    <label for="text">Text: </label><br><textarea name="text" id="text" cols="40"
-                                                  rows="10"><?php echo isset($_POST['text']) ? $_POST['text'] : '' ?></textarea><br><br>
-    <input type="submit" name="submit" value="Create files!">
-    <input type="reset" name="reset" id="reset" value="Clear">
+    <div class="form-group row">
+        <label for="fileName" class="col-sm-2 col-form-label">File name: </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control"
+                   id="fileName" name="fileName"
+                   placeholder="registratsiya-lekarstvennyh-sredstv-v-ukraine-registratsiya-lekarstv"
+                   size="75" maxlength="256"
+                   value="<?= isset($_POST['fileName']) ? $_POST['fileName'] : '' ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Title: </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control"
+                   id="title" name="title"
+                   placeholder="Регистрация лекарственных средств в Украине, регистрация лекарств"
+                   size="75" maxlength="100"
+                   value="<?= isset($_POST['title']) ? $_POST['title'] : '' ?>">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-sm-2 col-form-label">Description: </label>
+        <div class="col-sm-6">
+        <textarea name="description" class="form-control" id="description"
+                  cols="40" rows="10"
+                  placeholder="В соответствии с Законом Украины «О лекарственных средствах» обращение лекарственных средств на территории Украины возможно только после прохождения процедуры государственной регистрации."
+                  maxlength="500"><?= isset($_POST['description']) ? $_POST['description'] : '' ?></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="h1" class="col-sm-2 col-form-label">H1: </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control"
+                   id="h1" name="h1"
+                   placeholder="Государственная регистрация лекарственных средств в Украине"
+                   size="60" maxlength="100"
+                   value="<?= isset($_POST['h1']) ? $_POST['h1'] : '' ?>">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="text" class="col-sm-2 col-form-label">Text: </label>
+        <div class="col-sm-6">
+        <textarea name="text" class="form-control"
+                  id="text" cols="40"
+                  rows="10"><?= isset($_POST['text']) ? $_POST['text'] : '' ?></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-4">
+            <input type="submit" class="form-control" name="submit" value="Create files!">
+        </div>
+        <div class="col-sm-4">
+            <input type="reset" class="form-control" name="reset" id="reset" value="Clear">
+        </div>
+    </div>
 </form>
 
 <script>
@@ -46,7 +92,6 @@
         };
 
 </script>
-
 
 <?php
 
@@ -85,24 +130,9 @@ $filesTexts['ru'] = mb_convert_encoding($filesTexts['ru'], 'utf-8', 'Windows-125
 $filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'utf-8', 'Windows-1251');
 
 $title = trim($_POST['title']);
-//$title = mb_convert_encoding($title, 'Windows-1251');
-//$title = iconv('Windows-1251', 'Windows-1251', $title);
-//echo $title; die;
-//
 $description = trim($_POST['description']);
-//$description = mb_convert_encoding($description, 'Windows-1251');
-
-//$description = iconv('UTF-8', 'Windows-1251', $description);
-
-//echo $description; die;
-
-//
 $h1 = trim($_POST['h1']);
-//$h1 = iconv(mb_detect_encoding( $h1 ), 'Windows-1251', $h1);
-//
 $text = trim($_POST['text']);
-//$text = iconv(mb_detect_encoding( $text ), 'Windows-1251', $text);
-
 
 // START Replaces
 
@@ -116,10 +146,6 @@ if (isset($_POST['text']) && ($_POST['text'] != '')) {
     $filesTexts['ru'] = str_replace('{TEXT}', $_POST['text'], $filesTexts['ru']);
     $filesTexts['ua'] = str_replace('{TEXT}', $_POST['text'], $filesTexts['ua']);
 }
-
-//echo $filesTexts['ru'] . '<br><br><br>';
-//echo $filesTexts['ua'] . '<br>';
-//die;
 
 // END Replaces
 
