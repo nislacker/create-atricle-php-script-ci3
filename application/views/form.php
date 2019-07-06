@@ -1,7 +1,13 @@
 <!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="Windows-1251">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
     <title>Articles Generator 1.0</title>
 </head>
 <body>
@@ -75,12 +81,20 @@ $filesNames['ua'] = APPPATH . "/views/ua/" . $fileName . ".html";
 $filesTexts['ru'] = file_get_contents($filesTamplatesNames['ru']);
 $filesTexts['ua'] = file_get_contents($filesTamplatesNames['ua']);
 
+$filesTexts['ru'] = mb_convert_encoding($filesTexts['ru'], 'utf-8', 'Windows-1251');
+$filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'utf-8', 'Windows-1251');
+
 $title = trim($_POST['title']);
+//$title = mb_convert_encoding($title, 'Windows-1251');
 //$title = iconv('Windows-1251', 'Windows-1251', $title);
 //echo $title; die;
 //
 $description = trim($_POST['description']);
-//$description = iconv(mb_detect_encoding( $description ), 'Windows-1251', $description);
+//$description = mb_convert_encoding($description, 'Windows-1251');
+
+//$description = iconv('UTF-8', 'Windows-1251', $description);
+
+//echo $description; die;
 
 //
 $h1 = trim($_POST['h1']);
@@ -104,11 +118,13 @@ if (isset($_POST['text']) && ($_POST['text'] != '')) {
     $filesTexts['ua'] = str_replace('{TEXT}', $_POST['text'], $filesTexts['ua']);
 }
 
-echo $filesTexts['ru'] . '<br><br><br>';
-echo $filesTexts['ua'] . '<br>';
-die;
+//echo $filesTexts['ru'] . '<br><br><br>';
+//echo $filesTexts['ua'] . '<br>';
+//die;
 
 // END Replaces
+
+
 
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
 file_put_contents($filesNames['ua'], $filesTexts['ua']);
