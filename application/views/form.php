@@ -27,7 +27,7 @@
 <form method="post">
     <div class="form-group row">
         <label for="fileName" class="col-sm-2 col-form-label">File name: </label>
-        <div class="col-sm-6">
+        <div class="col-sm-10">
             <input type="text" class="form-control"
                    id="fileName" name="fileName"
                    placeholder="registratsiya-lekarstvennyh-sredstv-v-ukraine-registratsiya-lekarstv"
@@ -37,7 +37,7 @@
     </div>
     <div class="form-group row">
         <label for="title" class="col-sm-2 col-form-label">Title: </label>
-        <div class="col-sm-6">
+        <div class="col-sm-10">
             <input type="text" class="form-control"
                    id="title" name="title"
                    placeholder="Регистрация лекарственных средств в Украине, регистрация лекарств"
@@ -47,7 +47,7 @@
     </div>
     <div class="form-group row">
         <label for="description" class="col-sm-2 col-form-label">Description: </label>
-        <div class="col-sm-6">
+        <div class="col-sm-10">
         <textarea name="description" class="form-control"
                   id="description" cols="40" rows="10"
                   placeholder="В соответствии с Законом Украины «О лекарственных средствах» обращение лекарственных средств на территории Украины возможно только после прохождения процедуры государственной регистрации."
@@ -57,7 +57,7 @@
 
     <div class="form-group row">
         <label for="h1" class="col-sm-2 col-form-label">H1: </label>
-        <div class="col-sm-6">
+        <div class="col-sm-10">
             <input type="text" class="form-control"
                    id="h1" name="h1"
                    placeholder="Государственная регистрация лекарственных средств в Украине"
@@ -68,7 +68,7 @@
 
     <div class="form-group row">
         <label for="text" class="col-sm-2 col-form-label">Text: </label>
-        <div class="col-sm-6">
+        <div class="col-sm-10">
         <textarea name="text" class="form-control"
                   id="text" cols="40"
                   rows="10"><?= isset($_POST['text']) ? $_POST['text'] : '' ?></textarea>
@@ -77,21 +77,24 @@
     <div class="form-group row">
         <div class="col-sm-2"></div>
         <div class="col-sm-3">
-            <input type="submit" class="btn btn-success btn-lg btn-primary" name="submit" id="submit"
+            <input type="submit" class="btn btn-success btn-lg btn-primary"
+                   name="submit" id="submit"
                    value="Create files!">
         </div>
-        <div class="col-sm-3">
-            <input type="reset" class="btn btn-danger btn-lg float-right" name="reset" id="reset" value="Clear">
+        <div class="col-sm-7">
+            <input type="reset" class="btn btn-danger btn-lg float-right"
+                   name="reset" id="reset"
+                   value="Clear">
         </div>
     </div>
 </form>
 
 <script>
 
-    document.getElementById("submit").onclick =
-        function () {
-            alert('Files created!');
-        };
+    // document.getElementById("submit").onclick =
+    //     function () {
+    //         alert('Files created!');
+    //     };
 
     document.getElementById('reset').onclick =
         function () {
@@ -108,6 +111,11 @@
 
 $filesTamplatesNames['ru'] = APPPATH . "/views/ru template.html";
 $filesTamplatesNames['ua'] = APPPATH . "/views/ua template.html";
+
+// submit doesn't pressed yet
+if (!isset($_POST['submit'])) {
+    die;
+}
 
 if (!isset($_POST['fileName']) || ($_POST['fileName'] == '')) {
     echo 'Введи "File name"';
@@ -167,6 +175,14 @@ $filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'Windows-1251', 'utf-
 
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
 file_put_contents($filesNames['ua'], $filesTexts['ua']);
+
+echo <<<MARKER
+<script>
+ alert('Files created!');
+</script>
+MARKER;
+
+
 
 ?>
 
