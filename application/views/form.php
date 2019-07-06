@@ -104,7 +104,6 @@ $text = trim($_POST['text']);
 //$text = iconv(mb_detect_encoding( $text ), 'Windows-1251', $text);
 
 
-
 // START Replaces
 
 $filesTexts['ua'] = str_replace(array('{TITLE}', '{DESCRIPTION}', '{H1}', '{TEXT}'),
@@ -124,6 +123,9 @@ if (isset($_POST['text']) && ($_POST['text'] != '')) {
 
 // END Replaces
 
+
+$filesTexts['ru'] = mb_convert_encoding($filesTexts['ru'], 'Windows-1251', 'utf-8');
+$filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'Windows-1251', 'utf-8');
 
 
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
