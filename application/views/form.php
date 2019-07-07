@@ -187,10 +187,8 @@ if (isset($_POST['text']) && ($_POST['text'] != '')) {
 
 // END Replaces
 
-
 $filesTexts['ru'] = mb_convert_encoding($filesTexts['ru'], 'Windows-1251', 'utf-8');
 $filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'Windows-1251', 'utf-8');
-
 
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
 file_put_contents($filesNames['ua'], $filesTexts['ua']);
@@ -200,7 +198,6 @@ echo <<<JAVASCRIPT
  alert('Files created!');
 </script>
 JAVASCRIPT;
-
 
 ?>
 
