@@ -12,13 +12,8 @@
 
     <style>
         form {
-            /*margin: 0 auto;*/
             padding: 20px;
             background-color: #EEE;
-        }
-
-        input[type="reset"] {
-            display: inline-block;
         }
     </style>
 </head>
@@ -79,23 +74,29 @@
         <div class="col-sm-3">
             <input type="submit" class="btn btn-success btn-lg btn-primary"
                    name="submit" id="submit"
-                   value="Create files!">
+                   value="Add article to DB!">
         </div>
-        <div class="col-sm-7">
+
+        <div class="form-check col-sm-5">
+            <div class="col-sm-7"></div>
+            <div class="col-sm-5 float-right">
+                <input class="form-check-input" type="checkbox" value="" id="showPlaceholders"
+                       checked
+                       name="showPlaceholders">
+                <label class="form-check-label" for="showPlaceholders">
+                    show placeholders
+                </label>
+            </div>
+        </div>
+        <div class="col-sm-2">
             <input type="reset" class="btn btn-danger btn-lg float-right"
                    name="reset" id="reset"
-                   value="Clear">
+                   value="Clear form">
         </div>
     </div>
 </form>
 
 <script>
-
-    // document.getElementById("submit").onclick =
-    //     function () {
-    //         alert('Files created!');
-    //     };
-
     document.getElementById('reset').onclick =
         function () {
             document.getElementById('fileName').setAttribute('value', '');
@@ -105,6 +106,24 @@
             document.getElementById('text').innerText = '';
         };
 
+    document.getElementById('showPlaceholders').onchange =
+        function () {
+            checkboxShowPlaceholders = document.getElementById('showPlaceholders');
+            if (checkboxShowPlaceholders.checked === true) {
+                document.getElementById('fileName').setAttribute('placeholder', 'registratsiya-lekarstvennyh-sredstv-v-ukraine-registratsiya-lekarstv');
+                document.getElementById('title').setAttribute('placeholder', 'Регистрация лекарственных средств в Украине, регистрация лекарств');
+                document.getElementById('description').setAttribute('placeholder', 'В соответствии с Законом Украины «О лекарственных средствах» обращение лекарственных средств на территории Украины возможно только после прохождения процедуры государственной регистрации.');
+                document.getElementById('h1').setAttribute('placeholder', 'Государственная регистрация лекарственных средств в Украине');
+                document.getElementById('text').setAttribute('placeholder', '');
+            }
+            else {
+                document.getElementById('fileName').setAttribute('placeholder', '');
+                document.getElementById('title').setAttribute('placeholder', '');
+                document.getElementById('description').setAttribute('placeholder', '');
+                document.getElementById('h1').setAttribute('placeholder', '');
+                document.getElementById('text').setAttribute('placeholder', '');
+            }
+        }
 </script>
 
 <?php
@@ -112,7 +131,7 @@
 $filesTamplatesNames['ru'] = APPPATH . "/views/ru template.html";
 $filesTamplatesNames['ua'] = APPPATH . "/views/ua template.html";
 
-// submit doesn't pressed yet
+// if submit doesn't pressed yet
 if (!isset($_POST['submit'])) {
     die;
 }
@@ -176,12 +195,11 @@ $filesTexts['ua'] = mb_convert_encoding($filesTexts['ua'], 'Windows-1251', 'utf-
 file_put_contents($filesNames['ru'], $filesTexts['ru']);
 file_put_contents($filesNames['ua'], $filesTexts['ua']);
 
-echo <<<MARKER
+echo <<<JAVASCRIPT
 <script>
  alert('Files created!');
 </script>
-MARKER;
-
+JAVASCRIPT;
 
 
 ?>
